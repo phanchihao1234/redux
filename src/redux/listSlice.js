@@ -20,10 +20,18 @@ const listSlice = createSlice({
             state.students = state.students.filter(item => item.id !== action.payload)
         },
         updateStudent(state, action) {
-            state.students = state.students.map(item => item === action.payload ? { ...item, name: action.payload } : item)
+            state.students = state.students.map(item => item.id === action.payload.id ? { ...item, name: action.payload.name, checked: true } : item)
+        },
+        rechecked(state,action){
+            state.students=state.students.map(item => item.id === action.payload.id ? { ...item, checked: !item.checked } : item)
+        },
+        checkedAll(state,action){
+            state.students=state.students.map(item=>item.checked!==true?{...item, checked: !item.checked }:item)
+            // ({...item, checked: !item.checked })
+            // [...state.students, {checked: !state.students.checked }]
         }
     }
 })
 
-export const { deleteStudent, addStudent, updateStudent } = listSlice.actions
+export const { deleteStudent, addStudent, updateStudent, rechecked,checkedAll } = listSlice.actions
 export default listSlice.reducer
